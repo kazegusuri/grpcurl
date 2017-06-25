@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package grpcurl.test;
+option go_package = "github.com/kazegusuri/grpcurl/testdata;testdata";
+
+message EchoMessage {
+  string value = 1;
+  uint32 error_code = 2;
+}
+
+service Echo {
+  rpc Echo(EchoMessage) returns (EchoMessage) {}
+  rpc ClientStreamingEcho(stream EchoMessage) returns (EchoMessage) {}
+  rpc ServerStreamingEcho(EchoMessage) returns (stream EchoMessage) {}
+  rpc BidiStreamingBulkEcho(stream EchoMessage) returns (stream EchoMessage) {}
+}

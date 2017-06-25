@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package grpcurl.test;
+option go_package = "github.com/kazegusuri/grpcurl/testdata;testdata";
+
+message SimpleMessage {
+  string string_value = 1;
+  bool bool_value = 2;
+}
+
+message NumberMessage {
+  float float_value = 1;
+  double double_value = 2;
+
+  int32 int32_value = 3;
+  int64 int64_value = 4;
+  uint32 uint32_value = 5;
+  uint64 uint64_value = 6;
+  sint32 sint32_value = 7;
+  sint64 sint64_value = 8;
+
+  fixed32 fixed32_value = 9;
+  fixed64 fixed64_value = 10;
+  sfixed32 sfixed32_value = 11;
+  sfixed64 sfixed64_value = 12;
+}
+
+message NestedMessage {
+  message Nested {
+    int32 int32_value = 1;
+    string string_value = 2;
+  }
+  Nested nested_value = 1;
+  repeated Nested repeated_nested_values = 2;
+}
+
+message EnumMessage {
+  NumericEnum numeric_enum_value = 1;
+  repeated NumericEnum repeated_numeric_enum_values = 2;
+
+  AliasedEnum aliased_enum_value = 3;
+
+  enum Nested {
+    UNKNOWN = 0;
+    PENDING  = 1;
+    COMPLETED  = 2;
+  }
+  Nested nested_enum_value = 4;
+  repeated Nested repeated_nested_enum_values = 5;
+}
+
+enum NumericEnum {
+  ZERO = 0;
+  ONE  = 1;
+  TWO  = 2;
+}
+
+enum AliasedEnum {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 1;
+}
+
+message OneofMessage {
+  oneof oneof_value {
+    int32 int32_value = 1;
+    string string_value = 2;
+  }
+}
+
+message MapMessage {
+  map<string, NumericEnum> map_value = 1;
+  map<string, string> mapped_string_value = 2;
+  map<string, NestedMessage> mapped_nested_value = 3;
+}
