@@ -17,6 +17,7 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
 	rpb "google.golang.org/grpc/reflection/grpc_reflection_v1alpha"
+	"google.golang.org/grpc/status"
 )
 
 var (
@@ -103,6 +104,14 @@ func call(ctx context.Context, rcli *grpcreflect.Client, stub grpcdynamic.Stub, 
 	var headerMD metadata.MD
 	var trailerMD metadata.MD
 	resp, err := stub.InvokeRpc(ctx, mdesc, reqMsg, grpc.Header(&headerMD), grpc.Trailer(&trailerMD))
+	if err != nil {
+		st, ok := status.FromError(err)
+		if !ok {
+			return fmt.Errorf("unknown error: %v", err)
+		}
+
+		resp = st.Proto()
+	}
 
 	marshaler := &jsonpb.Marshaler{}
 	respJSON, err := marshaler.MarshalToString(resp)
