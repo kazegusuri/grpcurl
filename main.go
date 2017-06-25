@@ -217,7 +217,7 @@ func main() {
 		serviceName := args[2]
 		methodName := args[3]
 		stub := grpcdynamic.NewStub(conn)
-		if err = call(ctx, rcli, stub, serviceName, methodName, os.Stdin, false); err != nil {
+		if err = call(ctx, rcli, stub, serviceName, methodName, os.Stdin, true); err != nil {
 			fmt.Fprintf(os.Stderr, "call error: %v", err)
 			os.Exit(1)
 		}
