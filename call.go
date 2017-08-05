@@ -33,7 +33,7 @@ func NewCallCommand() *CallCommand {
 	c := &CallCommand{
 		cmd: &cobra.Command{
 			Use:   "call ADDR SERVICE_NAME METHOD_NAME",
-			Short: "call gRPC method with JSON",
+			Short: "Call gRPC method with JSON",
 			Example: `
 * call
 echo '{"message": "hello"}' | grpcurl call localhost:8888 test.Test Echo
