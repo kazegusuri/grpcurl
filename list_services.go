@@ -19,7 +19,7 @@ type ListServicesCommand struct {
 func NewListServicesCommand() *ListServicesCommand {
 	c := &ListServicesCommand{
 		cmd: &cobra.Command{
-			Use:   "list_services ADDR [SERVICE_NAME]",
+			Use:   "list_services ADDR [FULL_SERVICE_NAME]",
 			Short: "List services and methods provided by gRPC server",
 			Example: `
 * List services

@@ -45,6 +45,6 @@ test.Test.Echo
 ### Call gRPC method
 
 ```
-$ echo '{"Message": "hello"} | grpcurl -k call localhost:8080 test.EchoService Echo
+$ echo '{"Message": "hello"} | grpcurl -k call localhost:8080 test.EchoService.Echo
 {"Message":"hello"}
 ```
