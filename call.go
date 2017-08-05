@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"
 	"strings"
 
 	"github.com/golang/protobuf/jsonpb"
@@ -72,7 +71,7 @@ func (c *CallCommand) Run(cmd *cobra.Command, args []string) error {
 		AllowUnknownFields: true,
 	}
 
-	if err := c.call(ctx, args[1], os.Stdin); err != nil {
+	if err := c.call(ctx, args[1], c.opts.Input); err != nil {
 		return err
 	}
 	return nil

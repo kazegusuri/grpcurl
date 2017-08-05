@@ -1,12 +1,15 @@
 package main
 
 import (
+	"io"
+
 	"github.com/spf13/cobra"
 )
 
 type GlobalOptions struct {
 	Verbose  bool
 	Insecure bool
+	Input    io.Reader
 }
 
 type RootCommand struct {
@@ -14,7 +17,7 @@ type RootCommand struct {
 	opts *GlobalOptions
 }
 
-func NewRootCommand() *RootCommand {
+func NewRootCommand(r io.Reader) *RootCommand {
 	c := &RootCommand{
 		cmd: &cobra.Command{
 			Use:   "grpcurl",
@@ -23,7 +26,9 @@ func NewRootCommand() *RootCommand {
 				return cmd.Help()
 			},
 		},
-		opts: &GlobalOptions{},
+		opts: &GlobalOptions{
+			Input: r,
+		},
 	}
 	c.cmd.PersistentFlags().BoolVarP(&c.opts.Verbose, "verbose", "v", false, "verbose output")
 	c.cmd.PersistentFlags().BoolVarP(&c.opts.Insecure, "insecure", "k", false, "with insecure")
