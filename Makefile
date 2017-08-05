@@ -10,3 +10,7 @@ generate:
 
 clean:
 	rm -f testdata/*.pb.go
+
+.PHONY: test
+test:
+	go test -v github.com/kazegusuri/grpcurl
