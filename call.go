@@ -20,13 +20,14 @@ import (
 )
 
 type CallCommand struct {
-	cmd       *cobra.Command
-	headers   []string
-	addr      string
-	rcli      *grpcreflect.Client
-	stub      grpcdynamic.Stub
-	marshaler *jsonpb.Marshaler
-	verbose   bool
+	cmd         *cobra.Command
+	headers     []string
+	addr        string
+	rcli        *grpcreflect.Client
+	stub        grpcdynamic.Stub
+	marshaler   *jsonpb.Marshaler
+	unmarshaler *jsonpb.Unmarshaler
+	verbose     bool
 }
 
 func NewCallCommand() *CallCommand {
@@ -64,7 +65,13 @@ func (c *CallCommand) Run(cmd *cobra.Command, args []string) error {
 	defer conn.Close()
 	c.rcli = NewServerReflectionClient(ctx, conn)
 	c.stub = grpcdynamic.NewStub(conn)
-	c.marshaler = &jsonpb.Marshaler{}
+	c.marshaler = &jsonpb.Marshaler{
+		OrigName:     true,
+		EmitDefaults: true,
+	}
+	c.unmarshaler = &jsonpb.Unmarshaler{
+		AllowUnknownFields: true,
+	}
 
 	if err := c.call(ctx, args[1], args[2], os.Stdin); err != nil {
 		return err
@@ -107,7 +114,7 @@ func (c CallCommand) createMessage(mdesc *desc.MethodDescriptor, r io.Reader) (*
 	if err != nil {
 		return nil, fmt.Errorf("failed to ReadAll %v", err)
 	}
-	if err = msg.UnmarshalJSON(input); err != nil {
+	if err = msg.UnmarshalJSONPB(c.unmarshaler, input); err != nil {
 		return nil, fmt.Errorf("unmarshal %v", err)
 	}
 	return msg, nil
@@ -125,7 +132,7 @@ func (c CallCommand) call(ctx context.Context, serviceName, methodName string, r
 	}
 
 	if c.verbose {
-		reqJSON, err := msg.MarshalJSON()
+		reqJSON, err := msg.MarshalJSONPB(c.marshaler)
 		if err != nil {
 			return fmt.Errorf("marshal %v", err)
 		}
