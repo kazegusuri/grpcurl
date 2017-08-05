@@ -21,16 +21,16 @@ import (
 
 type CallCommand struct {
 	cmd         *cobra.Command
+	opts        *GlobalOptions
 	headers     []string
 	addr        string
 	rcli        *grpcreflect.Client
 	stub        grpcdynamic.Stub
 	marshaler   *jsonpb.Marshaler
 	unmarshaler *jsonpb.Unmarshaler
-	verbose     bool
 }
 
-func NewCallCommand() *CallCommand {
+func NewCallCommand(opts *GlobalOptions) *CallCommand {
 	c := &CallCommand{
 		cmd: &cobra.Command{
 			Use:   "call ADDR FULL_METHOD_NAME",
@@ -42,6 +42,7 @@ echo '{"message": "hello"}' | grpcurl call localhost:8888 test.Test.Echo
 			Args:         cobra.ExactArgs(2),
 			SilenceUsage: true,
 		},
+		opts: opts,
 	}
 	c.cmd.RunE = c.Run
 	c.cmd.Flags().StringArrayVarP(&c.headers, "header", "H", nil, "header")
@@ -55,10 +56,8 @@ func (c *CallCommand) Command() *cobra.Command {
 func (c *CallCommand) Run(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
-	c.verbose = verbose // via global flag
-
 	c.addr = args[0]
-	conn, err := NewGRPCConnection(ctx, c.addr)
+	conn, err := NewGRPCConnection(ctx, c.addr, c.opts.Insecure)
 	if err != nil {
 		return err
 	}
@@ -141,7 +140,7 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 		return err
 	}
 
-	if c.verbose {
+	if c.opts.Verbose {
 		reqJSON, err := msg.MarshalJSONPB(c.marshaler)
 		if err != nil {
 			return fmt.Errorf("marshal %v", err)
@@ -167,11 +166,11 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 		return fmt.Errorf("marshal %v", err)
 	}
 
-	if c.verbose {
+	if c.opts.Verbose {
 		fmt.Printf("<== Response Message\n")
 	}
 	fmt.Printf("%s\n", respJSON)
-	if c.verbose {
+	if c.opts.Verbose {
 		fmt.Printf("<== Response Headers\n")
 		for k, vs := range headerMD {
 			for i := range vs {

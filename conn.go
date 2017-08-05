@@ -8,7 +8,7 @@ import (
 	rpb "google.golang.org/grpc/reflection/grpc_reflection_v1alpha"
 )
 
-func NewGRPCConnection(ctx context.Context, addr string) (*grpc.ClientConn, error) {
+func NewGRPCConnection(ctx context.Context, addr string, insecure bool) (*grpc.ClientConn, error) {
 	var dialOpts []grpc.DialOption
 	if insecure {
 		dialOpts = append(dialOpts, grpc.WithInsecure())

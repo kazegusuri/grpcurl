@@ -10,13 +10,14 @@ import (
 
 type ListServicesCommand struct {
 	cmd  *cobra.Command
+	opts *GlobalOptions
 	addr string
 	rcli *grpcreflect.Client
 	long bool
 	full bool
 }
 
-func NewListServicesCommand() *ListServicesCommand {
+func NewListServicesCommand(opts *GlobalOptions) *ListServicesCommand {
 	c := &ListServicesCommand{
 		cmd: &cobra.Command{
 			Use:   "list_services ADDR [FULL_SERVICE_NAME]",
@@ -32,6 +33,7 @@ grpcurl ls localhost:8888 test.TestService
 			Args:         cobra.RangeArgs(1, 2),
 			SilenceUsage: true,
 		},
+		opts: opts,
 	}
 	c.cmd.RunE = c.Run
 	c.cmd.Flags().BoolVarP(&c.long, "long", "l", false, "list long")
@@ -48,7 +50,7 @@ func (c *ListServicesCommand) Run(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
 	c.addr = args[0]
-	conn, err := NewGRPCConnection(ctx, c.addr)
+	conn, err := NewGRPCConnection(ctx, c.addr, c.opts.Insecure)
 	if err != nil {
 		return err
 	}
