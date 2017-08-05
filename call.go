@@ -33,13 +33,13 @@ type CallCommand struct {
 func NewCallCommand() *CallCommand {
 	c := &CallCommand{
 		cmd: &cobra.Command{
-			Use:   "call ADDR SERVICE_NAME METHOD_NAME",
+			Use:   "call ADDR FULL_METHOD_NAME",
 			Short: "Call gRPC method with JSON",
 			Example: `
 * call
-echo '{"message": "hello"}' | grpcurl call localhost:8888 test.Test Echo
+echo '{"message": "hello"}' | grpcurl call localhost:8888 test.Test.Echo
 `,
-			Args:         cobra.ExactArgs(3),
+			Args:         cobra.ExactArgs(2),
 			SilenceUsage: true,
 		},
 	}
@@ -73,7 +73,7 @@ func (c *CallCommand) Run(cmd *cobra.Command, args []string) error {
 		AllowUnknownFields: true,
 	}
 
-	if err := c.call(ctx, args[1], args[2], os.Stdin); err != nil {
+	if err := c.call(ctx, args[1], os.Stdin); err != nil {
 		return err
 	}
 	return nil
@@ -94,7 +94,17 @@ func buildOutgoingMetadata(header []string) metadata.MD {
 	return metadata.Pairs(pairs...)
 }
 
-func (c CallCommand) resolveMessage(serviceName, methodName string) (*desc.MethodDescriptor, error) {
+func (c CallCommand) resolveMessage(fullMethodName string) (*desc.MethodDescriptor, error) {
+	// assume that fully-qualified method name cosists of
+	// FULL_SERVER_NAME + "." + METHOD_NAME
+	// so split the last dot to get service name
+	n := strings.LastIndex(fullMethodName, ".")
+	if n < 0 {
+		return nil, fmt.Errorf("invalid method name: %v", fullMethodName)
+	}
+	serviceName := fullMethodName[0:n]
+	methodName := fullMethodName[n+1:]
+
 	sdesc, err := c.rcli.ResolveService(serviceName)
 	if err != nil {
 		return nil, fmt.Errorf("service couldn't be resolve: %v", err)
@@ -120,8 +130,8 @@ func (c CallCommand) createMessage(mdesc *desc.MethodDescriptor, r io.Reader) (*
 	return msg, nil
 }
 
-func (c CallCommand) call(ctx context.Context, serviceName, methodName string, reader io.Reader) error {
-	mdesc, err := c.resolveMessage(serviceName, methodName)
+func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.Reader) error {
+	mdesc, err := c.resolveMessage(fullMethodName)
 	if err != nil {
 		return err
 	}
