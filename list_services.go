@@ -73,7 +73,7 @@ func (c *ListServicesCommand) listServices(ctx context.Context) error {
 	}
 
 	for i := range svcs {
-		fmt.Printf("%s\n", svcs[i])
+		fmt.Fprintf(c.opts.Output, "%s\n", svcs[i])
 	}
 
 	return nil
@@ -97,12 +97,12 @@ func (c *ListServicesCommand) listMethods(ctx context.Context, serviceName strin
 			if mdesc.IsServerStreaming() {
 				outRPCType = "streaming "
 			}
-			fmt.Printf("%s(%s%s) return (%s%s)\n",
+			fmt.Fprintf(c.opts.Output, "%s(%s%s) return (%s%s)\n",
 				mdesc.GetFullyQualifiedName(),
 				inRPCType, inType.GetFullyQualifiedName(),
 				outRPCType, outType.GetFullyQualifiedName())
 		} else {
-			fmt.Printf("%s\n", mdesc.GetFullyQualifiedName())
+			fmt.Fprintf(c.opts.Output, "%s\n", mdesc.GetFullyQualifiedName())
 		}
 	}
 

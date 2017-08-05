@@ -10,6 +10,7 @@ type GlobalOptions struct {
 	Verbose  bool
 	Insecure bool
 	Input    io.Reader
+	Output   io.Writer
 }
 
 type RootCommand struct {
@@ -17,7 +18,7 @@ type RootCommand struct {
 	opts *GlobalOptions
 }
 
-func NewRootCommand(r io.Reader) *RootCommand {
+func NewRootCommand(r io.Reader, w io.Writer) *RootCommand {
 	c := &RootCommand{
 		cmd: &cobra.Command{
 			Use:   "grpcurl",
@@ -27,7 +28,8 @@ func NewRootCommand(r io.Reader) *RootCommand {
 			},
 		},
 		opts: &GlobalOptions{
-			Input: r,
+			Input:  r,
+			Output: w,
 		},
 	}
 	c.cmd.PersistentFlags().BoolVarP(&c.opts.Verbose, "verbose", "v", false, "verbose output")

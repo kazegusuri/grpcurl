@@ -1,11 +1,12 @@
 package main
 
 import (
+	"os"
 	"strings"
 )
 
 func ExampleListServices() {
-	cmd := NewRootCommand(strings.NewReader(""))
+	cmd := NewRootCommand(strings.NewReader(""), os.Stdout)
 	cmd.Command().SetArgs([]string{"-k", "list_services", addr})
 	cmd.Command().Execute()
 	// Unordered Output:
@@ -14,7 +15,7 @@ func ExampleListServices() {
 }
 
 func ExampleListServicesMethod() {
-	cmd := NewRootCommand(strings.NewReader(""))
+	cmd := NewRootCommand(strings.NewReader(""), os.Stdout)
 	cmd.Command().SetArgs([]string{"-k", "list_services", addr, "grpcurl.test.Echo"})
 	cmd.Command().Execute()
 	// Unordered Output:
@@ -25,7 +26,7 @@ func ExampleListServicesMethod() {
 }
 
 func ExampleListServicesMethodLong() {
-	cmd := NewRootCommand(strings.NewReader(""))
+	cmd := NewRootCommand(strings.NewReader(""), os.Stdout)
 	cmd.Command().SetArgs([]string{"-k", "list_services", addr, "-l", "grpcurl.test.Echo"})
 	cmd.Command().Execute()
 	// Unordered Output:

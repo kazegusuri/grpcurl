@@ -144,8 +144,8 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 		if err != nil {
 			return fmt.Errorf("marshal %v", err)
 		}
-		fmt.Printf("==> Request Message\n")
-		fmt.Printf("%s\n", string(reqJSON))
+		fmt.Fprintf(c.opts.Output, "==> Request Message\n")
+		fmt.Fprintf(c.opts.Output, "%s\n", string(reqJSON))
 	}
 
 	var headerMD metadata.MD
@@ -166,21 +166,21 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 	}
 
 	if c.opts.Verbose {
-		fmt.Printf("<== Response Message\n")
+		fmt.Fprintf(c.opts.Output, "<== Response Message\n")
 	}
-	fmt.Printf("%s\n", respJSON)
+	fmt.Fprintf(c.opts.Output, "%s\n", respJSON)
 	if c.opts.Verbose {
-		fmt.Printf("<== Response Headers\n")
+		fmt.Fprintf(c.opts.Output, "<== Response Headers\n")
 		for k, vs := range headerMD {
 			for i := range vs {
-				fmt.Printf("%s: %s\n", k, vs[i])
+				fmt.Fprintf(c.opts.Output, "%s: %s\n", k, vs[i])
 			}
 		}
 
-		fmt.Printf("<== Response Trailer\n")
+		fmt.Fprintf(c.opts.Output, "<== Response Trailer\n")
 		for k, vs := range trailerMD {
 			for i := range vs {
-				fmt.Printf("%s: %s\n", k, vs[i])
+				fmt.Fprintf(c.opts.Output, "%s: %s\n", k, vs[i])
 			}
 		}
 	}

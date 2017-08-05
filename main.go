@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	if err := NewRootCommand(os.Stdin).Command().Execute(); err != nil {
+	if err := NewRootCommand(os.Stdin, os.Stdout).Command().Execute(); err != nil {
 		os.Exit(1)
 	}
 }
