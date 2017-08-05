@@ -18,6 +18,13 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+const (
+	requestMessageMarker  = "==> Request Message"
+	responseMessageMarker = "<== Response Message"
+	responseHeaderMarker  = "<== Response Headers"
+	responseTrailerMarker = "<== Response Trailer"
+)
+
 type CallCommand struct {
 	cmd         *cobra.Command
 	opts        *GlobalOptions
@@ -144,7 +151,7 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 		if err != nil {
 			return fmt.Errorf("marshal %v", err)
 		}
-		fmt.Fprintf(c.opts.Output, "==> Request Message\n")
+		fmt.Fprintln(c.opts.Output, requestMessageMarker)
 		fmt.Fprintf(c.opts.Output, "%s\n", string(reqJSON))
 	}
 
@@ -166,18 +173,18 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 	}
 
 	if c.opts.Verbose {
-		fmt.Fprintf(c.opts.Output, "<== Response Message\n")
+		fmt.Fprintln(c.opts.Output, responseMessageMarker)
 	}
 	fmt.Fprintf(c.opts.Output, "%s\n", respJSON)
 	if c.opts.Verbose {
-		fmt.Fprintf(c.opts.Output, "<== Response Headers\n")
+		fmt.Fprintln(c.opts.Output, responseHeaderMarker)
 		for k, vs := range headerMD {
 			for i := range vs {
 				fmt.Fprintf(c.opts.Output, "%s: %s\n", k, vs[i])
 			}
 		}
 
-		fmt.Fprintf(c.opts.Output, "<== Response Trailer\n")
+		fmt.Fprintln(c.opts.Output, responseTrailerMarker)
 		for k, vs := range trailerMD {
 			for i := range vs {
 				fmt.Fprintf(c.opts.Output, "%s: %s\n", k, vs[i])
