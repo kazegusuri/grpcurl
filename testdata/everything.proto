@@ -74,3 +74,11 @@ message MapMessage {
   map<string, string> mapped_string_value = 2;
   map<string, NestedMessage> mapped_nested_value = 3;
 }
+
+service Everything {
+  rpc Simple(SimpleMessage) returns (SimpleMessage) {}
+  rpc Number(NumberMessage) returns (NumberMessage) {}
+  rpc Enum(EnumMessage) returns (EnumMessage) {}
+  rpc Oneof(OneofMessage) returns (OneofMessage) {}
+  rpc Map(MapMessage) returns (MapMessage) {}
+}

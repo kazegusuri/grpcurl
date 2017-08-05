@@ -23,6 +23,7 @@ func RunServer(ctx context.Context, port int) error {
 
 	go func() {
 		pb.RegisterEchoServer(s, NewEchoService())
+		pb.RegisterEverythingServer(s, NewEverythingService())
 		reflection.Register(s)
 
 		s.Serve(l)

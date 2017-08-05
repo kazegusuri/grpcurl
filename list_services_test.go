@@ -12,6 +12,7 @@ func ExampleListServices() {
 	// Unordered Output:
 	// grpc.reflection.v1alpha.ServerReflection
 	// grpcurl.test.Echo
+	// grpcurl.test.Everything
 }
 
 func ExampleListServicesMethod() {
