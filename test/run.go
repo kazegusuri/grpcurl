@@ -6,6 +6,7 @@ import (
 	"net"
 
 	pb "github.com/kazegusuri/grpcurl/testdata"
+	pbv2 "github.com/kazegusuri/grpcurl/testdata/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -23,6 +24,7 @@ func RunServer(ctx context.Context, port int) error {
 
 	go func() {
 		pb.RegisterEchoServer(s, NewEchoService())
+		pbv2.RegisterEchoServer(s, NewEchoServiceV2())
 		pb.RegisterEverythingServer(s, NewEverythingService())
 		reflection.Register(s)
 
