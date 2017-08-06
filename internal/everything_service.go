@@ -1,7 +1,7 @@
 package test
 
 import (
-	pb "github.com/kazegusuri/grpcurl/testdata"
+	pb "github.com/kazegusuri/grpcurl/internal/testdata"
 	"golang.org/x/net/context"
 )
 

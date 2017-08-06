@@ -5,7 +5,7 @@ import (
 	"flag"
 
 	"github.com/golang/glog"
-	"github.com/kazegusuri/grpcurl/test"
+	"github.com/kazegusuri/grpcurl/internal"
 )
 
 var (

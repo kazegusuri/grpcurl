@@ -3,7 +3,7 @@ package test
 import (
 	"io"
 
-	pb "github.com/kazegusuri/grpcurl/testdata"
+	pb "github.com/kazegusuri/grpcurl/internal/testdata"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

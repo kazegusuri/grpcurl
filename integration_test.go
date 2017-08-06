@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/kazegusuri/grpcurl/test"
+	"github.com/kazegusuri/grpcurl/internal"
 )
 
 var (

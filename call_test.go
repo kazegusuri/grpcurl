@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/golang/protobuf/jsonpb"
-	pb "github.com/kazegusuri/grpcurl/testdata"
+	pb "github.com/kazegusuri/grpcurl/internal/testdata"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

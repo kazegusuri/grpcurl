@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net"
 
-	pb "github.com/kazegusuri/grpcurl/testdata"
-	pbv2 "github.com/kazegusuri/grpcurl/testdata/v2"
+	pb "github.com/kazegusuri/grpcurl/internal/testdata"
+	pbv2 "github.com/kazegusuri/grpcurl/internal/testdata/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
