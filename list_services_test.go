@@ -13,6 +13,7 @@ func ExampleListServices() {
 	// grpc.reflection.v1alpha.ServerReflection
 	// grpcurl.test.Echo
 	// grpcurl.test.Everything
+	// grpcurl.test.v2.Echo
 }
 
 func ExampleListServicesMethod() {
