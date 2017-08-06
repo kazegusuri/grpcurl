@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 package grpcurl.test.v2;
-option go_package = "github.com/kazegusuri/grpcurl/testdata/v2;v2";
+option go_package = "github.com/kazegusuri/grpcurl/internal/testdata/v2;v2";
 
-import "testdata/echo_service.proto";
+import "internal/testdata/echo_service.proto";
 
 service Echo {
   rpc Echo(grpcurl.test.EchoMessage) returns (grpcurl.test.EchoMessage) {}

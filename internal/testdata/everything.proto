@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package grpcurl.test;
-option go_package = "github.com/kazegusuri/grpcurl/testdata;testdata";
+option go_package = "github.com/kazegusuri/grpcurl/internal/testdata;testdata";
 
 message SimpleMessage {
   string string_value = 1;

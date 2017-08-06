@@ -5,13 +5,13 @@ OUTPUT_DIR=_output
 
 generate:
 	mkdir -p $(OUTPUT_DIR)
-	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) testdata/*.proto
-	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) testdata/v2/*.proto
-	cp $(OUTPUT_DIR)/$(PKG)/testdata/*.go testdata/
-	cp $(OUTPUT_DIR)/$(PKG)/testdata/v2/*.go testdata/v2/
+	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/*.proto
+	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/v2/*.proto
+	cp $(OUTPUT_DIR)/$(PKG)/internal/testdata/*.go internal/testdata/
+	cp $(OUTPUT_DIR)/$(PKG)/internal/testdata/v2/*.go internal/testdata/v2/
 
 clean:
-	rm -f testdata/*.pb.go
+	rm -f internal/testdata/*.pb.go
 
 .PHONY: test
 test:
