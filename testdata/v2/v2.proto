@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package grpcurl.test.sub;
+option go_package = "github.com/kazegusuri/grpcurl/testdata/v2;v2";
+
+import "testdata/echo_service.proto";
+
+service Echo {
+  rpc Echo(grpcurl.test.EchoMessage) returns (grpcurl.test.EchoMessage) {}
+}
