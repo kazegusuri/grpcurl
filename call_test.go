@@ -302,3 +302,15 @@ func TestEverythingMapEmpty(t *testing.T) {
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
+
+func TestEchoV2Echo(t *testing.T) {
+	// cross package message
+	buf, err := testCall(
+		"grpcurl.test.v2.Echo.Echo",
+		`{"value": "xxx"}`)
+	require.NoError(t, err)
+	resp := parseTestResponse(buf.String())
+	expected := `{"value":"xxx","error_code":0}`
+	assert.Equal(t, expected, resp.RequestMessage, "request message")
+	assert.Equal(t, expected, resp.ResponseMessage, "response message")
+}
