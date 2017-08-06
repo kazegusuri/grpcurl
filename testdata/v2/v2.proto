@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package grpcurl.test.sub;
+package grpcurl.test.v2;
 option go_package = "github.com/kazegusuri/grpcurl/testdata/v2;v2";
 
 import "testdata/echo_service.proto";
