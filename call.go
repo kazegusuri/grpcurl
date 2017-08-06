@@ -112,7 +112,7 @@ func (c CallCommand) resolveMessage(fullMethodName string) (*desc.MethodDescript
 
 	sdesc, err := c.rcli.ResolveService(serviceName)
 	if err != nil {
-		return nil, fmt.Errorf("service couldn't be resolve: %v", err)
+		return nil, fmt.Errorf("service couldn't be resolve: %v: %v", err, serviceName)
 	}
 
 	mdesc := sdesc.FindMethodByName(methodName)
