@@ -15,6 +15,7 @@ It has these top-level messages:
 	NumberMessage
 	NestedMessage
 	EnumMessage
+	Oneof
 	OneofMessage
 	MapMessage
 */

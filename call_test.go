@@ -212,7 +212,7 @@ func TestEverythingOneof1(t *testing.T) {
 	buf, err := testCall("grpcurl.test.Everything.Oneof", `{"int32_value": 100}`)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{"int32_value":100,"string_value":""}`
+	expected := `{"int32_value":100,"string_value":"","repeated_oneof_values":[]}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
@@ -221,7 +221,7 @@ func TestEverythingOneof2(t *testing.T) {
 	buf, err := testCall("grpcurl.test.Everything.Oneof", `{"string_value": "xxx"}`)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{"int32_value":0,"string_value":"xxx"}`
+	expected := `{"int32_value":0,"string_value":"xxx","repeated_oneof_values":[]}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
@@ -237,7 +237,7 @@ func TestEverythingOneof3(t *testing.T) {
 	buf, err := testCall("grpcurl.test.Everything.Oneof", msg)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{"int32_value":2000,"string_value":""}`
+	expected := `{"int32_value":2000,"string_value":"","repeated_oneof_values":[]}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
@@ -246,7 +246,7 @@ func TestEverythingOneofEmpty(t *testing.T) {
 	buf, err := testCall("grpcurl.test.Everything.Oneof", `{}`)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{"int32_value":0,"string_value":""}`
+	expected := `{"int32_value":0,"string_value":"","repeated_oneof_values":[]}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
@@ -254,13 +254,13 @@ func TestEverythingOneofEmpty(t *testing.T) {
 func TestEverythingMap(t *testing.T) {
 	m := &jsonpb.Marshaler{OrigName: true}
 	msg, err := m.MarshalToString(&pb.MapMessage{
-		MapValue: map[string]pb.NumericEnum{
-			"one": pb.NumericEnum_ONE,
-			"two": pb.NumericEnum_TWO,
-		},
-		MappedStringValue: map[string]string{
+		MappedValue: map[string]string{
 			"foo": "foo1",
 			"bar": "bar1",
+		},
+		MappedEnumValue: map[string]pb.NumericEnum{
+			"one": pb.NumericEnum_ONE,
+			"two": pb.NumericEnum_TWO,
 		},
 		MappedNestedValue: map[string]*pb.NestedMessage{
 			"foo": &pb.NestedMessage{
@@ -287,7 +287,7 @@ func TestEverythingMap(t *testing.T) {
 	buf, err := testCall("grpcurl.test.Everything.Map", msg)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{"map_value":{"one":"ONE","two":"TWO"},"mapped_string_value":{"bar":"bar1","foo":"foo1"},"mapped_nested_value":{"foo":{"nested_value":{"int32_value":100,"string_value":"xxx"},"repeated_nested_values":[{"int32_value":200,"string_value":"yyy"},{"int32_value":300,"string_value":"zzz"}]}}}`
+	expected := `{"mapped_value":{"bar":"bar1","foo":"foo1"},"mapped_enum_value":{"one":"ONE","two":"TWO"},"mapped_nested_value":{"foo":{"nested_value":{"int32_value":100,"string_value":"xxx"},"repeated_nested_values":[{"int32_value":200,"string_value":"yyy"},{"int32_value":300,"string_value":"zzz"}]}}}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
