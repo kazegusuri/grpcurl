@@ -1,3 +1,4 @@
 /grpcurl
 /vendor/
 /_output/
+*.test
