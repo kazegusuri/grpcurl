@@ -292,13 +292,11 @@ func TestEverythingMap(t *testing.T) {
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
 
-// TODO protoreflect support
 func TestEverythingMapEmpty(t *testing.T) {
-	t.Skip("protoreflect not supported")
 	buf, err := testCall("grpcurl.test.Everything.Map", `{}`)
 	require.NoError(t, err)
 	resp := parseTestResponse(buf.String())
-	expected := `{}`
+	expected := `{"map_value":{},"mapped_string_value":{},"mapped_nested_value":{}}`
 	assert.Equal(t, expected, resp.RequestMessage, "request message")
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
