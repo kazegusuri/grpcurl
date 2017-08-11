@@ -1,7 +1,13 @@
-all: generate
-
 PKG=github.com/kazegusuri/grpcurl
 OUTPUT_DIR=_output
+
+all: build
+
+dep:
+	dep ensure
+
+build:
+	go build -o grpcurl .
 
 generate:
 	mkdir -p $(OUTPUT_DIR)

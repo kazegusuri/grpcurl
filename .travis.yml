@@ -1,0 +1,15 @@
+language: go
+sudo: false
+
+go:
+  - 1.8
+
+before_install:
+  - go get -u github.com/golang/dep/...
+  - make dep
+
+install:
+  - make
+
+script:
+  - make test
