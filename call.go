@@ -141,6 +141,8 @@ func (c CallCommand) call(ctx context.Context, fullMethodName string, reader io.
 		return err
 	}
 
+	ctx = metadata.NewOutgoingContext(ctx, buildOutgoingMetadata(c.headers))
+
 	msg, err := c.createMessage(mdesc, reader)
 	if err != nil {
 		return err
