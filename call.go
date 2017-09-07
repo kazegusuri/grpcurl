@@ -16,6 +16,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+
+	_ "google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 
 const (

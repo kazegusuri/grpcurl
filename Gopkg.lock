@@ -70,7 +70,7 @@
 [[projects]]
   branch = "master"
   name = "google.golang.org/genproto"
-  packages = ["googleapis/rpc/status"]
+  packages = ["googleapis/rpc/errdetails","googleapis/rpc/status"]
   revision = "595979c8a7bf586b2d293fb42246bf91a0b893d9"
 
 [[projects]]
@@ -82,6 +82,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e87aa11b56d54022dfc04ef798649afa4d055a88ef4909bff57e928678c25562"
+  inputs-digest = "c54e303ae8ae902bb7cb49361128e19968641df2899fd2506a5f4c46c9f440a1"
   solver-name = "gps-cdcl"
   solver-version = 1
