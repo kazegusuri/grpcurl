@@ -18,6 +18,7 @@ It has these top-level messages:
 	Oneof
 	OneofMessage
 	MapMessage
+	GoogleMessage
 */
 package testdata
 

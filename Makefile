@@ -11,8 +11,8 @@ build:
 
 generate:
 	mkdir -p $(OUTPUT_DIR)
-	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/*.proto
-	protoc -I. --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/v2/*.proto
+	protoc -I. -Ithird_party/googleapis --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/*.proto
+	protoc -I. -Ithird_party/googleapis --go_out=plugins=grpc:$(OUTPUT_DIR) internal/testdata/v2/*.proto
 	cp $(OUTPUT_DIR)/$(PKG)/internal/testdata/*.go internal/testdata/
 	cp $(OUTPUT_DIR)/$(PKG)/internal/testdata/v2/*.go internal/testdata/v2/
 

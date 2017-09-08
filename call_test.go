@@ -310,6 +310,17 @@ func TestEverythingMapEmpty(t *testing.T) {
 	assert.Equal(t, expected, resp.ResponseMessage, "response message")
 }
 
+func TestEverythingGoogle(t *testing.T) {
+	buf, err := testCall(
+		"grpcurl.test.Everything.Google",
+		`{"info":{"request_id":"xxx","serving_data":"xyz"}}`)
+	require.NoError(t, err)
+	resp := parseTestResponse(buf.String())
+	expected := `{"info":{"request_id":"xxx","serving_data":"xyz"}}`
+	assert.Equal(t, expected, resp.RequestMessage, "request message")
+	assert.Equal(t, expected, resp.ResponseMessage, "response message")
+}
+
 func TestEchoV2Echo(t *testing.T) {
 	// cross package message
 	buf, err := testCall(

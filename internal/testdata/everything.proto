@@ -3,6 +3,8 @@ syntax = "proto3";
 package grpcurl.test;
 option go_package = "github.com/kazegusuri/grpcurl/internal/testdata;testdata";
 
+import "google/rpc/error_details.proto";
+
 message SimpleMessage {
   string string_value = 1;
   bool bool_value = 2;
@@ -84,12 +86,15 @@ message MapMessage {
   map<string, NestedMessage> mapped_nested_value = 3;
 }
 
+message GoogleMessage {
+  google.rpc.RequestInfo info = 1;
+}
+
 service Everything {
   rpc Simple(SimpleMessage) returns (SimpleMessage) {}
   rpc Number(NumberMessage) returns (NumberMessage) {}
   rpc Enum(EnumMessage) returns (EnumMessage) {}
   rpc Oneof(OneofMessage) returns (OneofMessage) {}
   rpc Map(MapMessage) returns (MapMessage) {}
+  rpc Google(GoogleMessage) returns (GoogleMessage) {}
 }
-
-

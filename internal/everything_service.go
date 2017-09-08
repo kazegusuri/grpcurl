@@ -30,3 +30,7 @@ func (s *EverythingService) Oneof(ctx context.Context, in *pb.OneofMessage) (*pb
 func (s *EverythingService) Map(ctx context.Context, in *pb.MapMessage) (*pb.MapMessage, error) {
 	return in, nil
 }
+
+func (s *EverythingService) Google(ctx context.Context, in *pb.GoogleMessage) (*pb.GoogleMessage, error) {
+	return in, nil
+}
