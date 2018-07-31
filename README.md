@@ -1,6 +1,6 @@
 # grpcurl
 
-[![Build Status](https://travis-ci.org/kazegusuri/grpcurl.svg?branch=master)](https://travis-ci.org/kazegusuri/grpcurl)  
+[![CircleCI](https://circleci.com/gh/kazegusuri/grpcurl.svg?style=svg)](https://circleci.com/gh/kazegusuri/grpcurl)
 
 super experimental
 

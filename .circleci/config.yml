@@ -1,0 +1,23 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: golang:1.10.2-stretch
+    working_directory: /go/src/github.com/kazegusuri/grpcurl
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            go get -u github.com/golang/dep/...
+            make dep
+
+      - run:
+          name: run tests
+          command: |
+            make test
+      - run:
+          name: run build
+          command: |
+            make build
