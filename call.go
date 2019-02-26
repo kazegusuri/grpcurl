@@ -75,6 +75,7 @@ func (c *CallCommand) Run(cmd *cobra.Command, args []string) error {
 	c.marshaler = &jsonpb.Marshaler{
 		OrigName:     true,
 		EmitDefaults: true,
+		AnyResolver:  DynamicAnyResolver{},
 	}
 	c.unmarshaler = &jsonpb.Unmarshaler{
 		AllowUnknownFields: true,
