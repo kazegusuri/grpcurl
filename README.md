@@ -1,3 +1,7 @@
+**This repository is no longer maintained**
+
+Instead, I recommend for others to use [grpcurl](https://github.com/fullstorydev/grpcurl) or [evans](https://github.com/ktr0731/evans).
+
 # grpcurl
 
 [![CircleCI](https://circleci.com/gh/kazegusuri/grpcurl.svg?style=svg)](https://circleci.com/gh/kazegusuri/grpcurl)
