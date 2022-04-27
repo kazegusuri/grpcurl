@@ -3,14 +3,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: golang:1.10.2-stretch
+      - image: golang:1.17-bullseye
     working_directory: /go/src/github.com/kazegusuri/grpcurl
     steps:
       - checkout
       - run:
           name: install dependencies
           command: |
-            go get -u github.com/golang/dep/...
             make dep
 
       - run:

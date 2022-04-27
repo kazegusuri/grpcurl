@@ -1,6 +1,0 @@
-ignored = ["github.com/kazegusuri/grpcurl/third_party*"]
-
-[[constraint]]
-  name = "google.golang.org/grpc"
-  version = "1.4.2"
-

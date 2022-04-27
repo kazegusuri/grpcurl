@@ -4,7 +4,7 @@ OUTPUT_DIR=_output
 all: build
 
 dep:
-	dep ensure -vendor-only
+	go mod download
 
 build:
 	go build -o grpcurl .
