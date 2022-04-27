@@ -11,7 +11,7 @@ super experimental
 # Installation
 
 ```
-go get -u github.com/kazegusuri/grpcurl
+go install github.com/kazegusuri/grpcurl@latest
 ```
 
 # Usage
